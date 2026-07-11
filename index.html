@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumen — Rate. Shoot. Discover.</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ ICON SPRITE ============ -->
+<svg style="display:none">
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9a1 1 0 0 0 1 1h4v-6h2v6h4a1 1 0 0 0 1-1v-9"/>
+  </symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="M15.5 8.5 13 13l-4.5 2.5L11 11l4.5-2.5Z"/>
+  </symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <path d="M12 5v14M5 12h14"/>
+  </symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 19a2 2 0 0 0 4 0"/>
+  </symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.4-3.8 4.4-5.8 7.5-5.8s6.1 2 7.5 5.8"/>
+  </symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11" cy="11" r="6.5"/><path d="m20 20-3.6-3.6"/>
+  </symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 20s-7-4.6-9.3-9C1 7.6 2.7 4.5 6 4.2c2-.2 3.7.9 6 3.3 2.3-2.4 4-3.5 6-3.3 3.3.3 5 3.4 3.3 6.8C19 15.4 12 20 12 20Z"/>
+  </symbol>
+  <symbol id="i-thumbs-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17 14V4"/><path d="M17 14H7.5a2 2 0 0 1-2-2.3l1-6A2 2 0 0 1 8.5 4H15a2 2 0 0 1 2 2v8Z"/><path d="M7.5 14 5 19a2 2 0 0 0 2 3l.5-1 2.5-4.5"/>
+  </symbol>
+  <symbol id="i-comment" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5.5h16v11H9L4 20V5.5Z"/>
+  </symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 4h12v16l-6-4-6 4V4Z"/>
+  </symbol>
+  <symbol id="i-more" viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>
+  </symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+    <rect x="4" y="4" width="7" height="7" rx="1.2"/><rect x="13" y="4" width="7" height="7" rx="1.2"/><rect x="4" y="13" width="7" height="7" rx="1.2"/><rect x="13" y="13" width="7" height="7" rx="1.2"/>
+  </symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M11.5 4H5v6.5L15 20l6.5-6.5L11.5 4Z"/><circle cx="8.5" cy="8" r="1.2"/>
+  </symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="10.5" width="14" height="9.5" rx="1.6"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/>
+  </symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 5 8 12l7 7"/>
+  </symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <path d="M5 5l14 14M19 5 5 19"/>
+  </symbol>
+  <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 12 20 4 13 20l-2-6-7-2Z"/>
+  </symbol>
+  <symbol id="i-aperture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    <circle cx="12" cy="12" r="9.5"/>
+    <line x1="14.3" y1="8" x2="20" y2="17.9"/>
+    <line x1="9.7" y1="8" x2="21.1" y2="8"/>
+    <line x1="7.4" y1="12" x2="13.1" y2="2.1"/>
+    <line x1="9.7" y1="16" x2="4" y2="6.1"/>
+    <line x1="14.3" y1="16" x2="2.8" y2="16"/>
+    <line x1="16.6" y1="12" x2="10.9" y2="21.9"/>
+  </symbol>
+  <symbol id="i-film" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+    <rect x="3.5" y="4" width="17" height="16" rx="1.6"/><path d="M8 4v16M16 4v16M3.5 9h4.5M16 9h4.5M3.5 15h4.5M16 15h4.5"/>
+  </symbol>
+</svg>
+
+<!-- ============ APP SHELL ============ -->
+<div class="app">
+
+  <!-- LEFT RAIL -->
+  <aside class="rail">
+    <div class="brand">
+      <svg class="icon"><use href="#i-aperture"/></svg>
+      <span class="brand-name">Lum<em>en</em></span>
+    </div>
+
+    <nav class="nav-list">
+      <button class="nav-item active" data-view="feed">
+        <svg class="icon"><use href="#i-home"/></svg><span class="label" data-i18n="feed">Feed</span>
+      </button>
+      <button class="nav-item" data-action="toast" data-msg="Discover is being calibrated — soon.">
+        <svg class="icon"><use href="#i-compass"/></svg><span class="label" data-i18n="discover">Discover</span>
+      </button>
+      <button class="nav-item" data-action="toast" data-msg="Upload composer opening…">
+        <svg class="icon"><use href="#i-plus"/></svg><span class="label" data-i18n="upload">Create</span>
+      </button>
+      <button class="nav-item" data-action="toast" data-msg="No new notifications right now.">
+        <svg class="icon"><use href="#i-bell"/></svg><span class="label" data-i18n="notifications">Notifications</span>
+      </button>
+      <button class="nav-item" data-view="profile">
+        <svg class="icon"><use href="#i-user"/></svg><span class="label" data-i18n="profile">Profile</span>
+      </button>
+    </nav>
+
+    <button class="rail-create" data-action="toast" data-msg="Composer opening…">
+      <svg class="icon"><use href="#i-plus"/></svg><span data-i18n="upload">New post</span>
+    </button>
+
+    <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+      <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-other">AR</span>
+    </button>
+
+    <div class="rail-footer">
+      <div class="avatar grad-6" style="width:34px;height:34px;border-radius:50%;"></div>
+      <div class="who"><b>Sami Okafor</b><span>@sami.frames</span></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- FEED VIEW -->
+    <section class="view active" id="view-feed">
+      <div class="topbar">
+        <div class="feed-tabs">
+          <button class="feed-tab active" data-tab="feed" data-i18n="feed">Feed</button>
+          <button class="feed-tab" data-tab="reels" data-i18n="reels">Reels</button>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-btn" data-action="toast" data-msg="Search coming into focus soon." data-i18n-title="search" title="Search"><svg class="icon"><use href="#i-search"/></svg></button>
+          <button class="icon-btn" data-action="toast" data-msg="Message requests are empty." data-i18n-title="messages" title="Messages"><svg class="icon"><use href="#i-send"/></svg></button>
+        </div>
+      </div>
+
+      <div class="stories" id="storiesRail"></div>
+
+      <div id="feedPanel">
+        <div id="postsList"></div>
+      </div>
+
+      <div id="reelsPanel" style="display:none;">
+        <div class="empty">
+          <svg class="icon"><use href="#i-film"/></svg>
+          <h3>No reels rated yet</h3>
+          <p>Motion pieces from creators you follow will land here once they're scored by the community.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFILE VIEW -->
+    <section class="view" id="view-profile">
+      <div class="profile-head">
+        <div class="avatar grad-1" style="width:88px;height:88px;"></div>
+        <div class="profile-info">
+          <h2>Sami Okafor</h2>
+          <div class="handle">@sami.frames · Lagos, NG</div>
+          <p>Documentary and portrait work across West Africa. Shooting on film since 2014 — grain over gloss.</p>
+          <div class="profile-stats">
+            <div><b>45</b><span>Posts</span></div>
+            <div><b>12.4k</b><span>Followers</span></div>
+            <div><b>98</b><span>Following</span></div>
+          </div>
+        </div>
+        <div class="profile-cta">
+          <button class="btn-outline" data-action="toast" data-msg="Message composer opening…">Message</button>
+          <button class="follow-btn" data-follow="self">Follow</button>
+        </div>
+      </div>
+
+      <div class="gallery-tabs">
+        <button class="g-tab active" data-gtab="gallery"><svg class="icon"><use href="#i-grid"/></svg>Gallery</button>
+        <button class="g-tab" data-gtab="tags"><svg class="icon"><use href="#i-tag"/></svg>Tags</button>
+      </div>
+
+      <div id="galleryPanel" class="gallery-grid"></div>
+      <div id="tagsPanel" class="tags-panel" style="display:none;"></div>
+    </section>
+
+  </main>
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="side">
+    <div class="side-card">
+      <h4>Highest rated today</h4>
+      <div id="topRatedList"></div>
+    </div>
+    <div class="side-card">
+      <h4>Photographers to follow</h4>
+      <div id="suggestList"></div>
+    </div>
+    <p class="footer-note">Lumen is a concept interface for exploring rating-led photo communities. Not a real network — nothing here is stored or shared.</p>
+  </aside>
+
+</div>
+
+<!-- ============ STORY VIEWER ============ -->
+<div class="viewer" id="viewer">
+  <div class="viewer-frame">
+    <div class="viewer-tint"></div>
+    <div class="viewer-progress" id="viewerProgress"></div>
+
+    <div class="viewer-top">
+      <div class="viewer-who">
+        <div class="avatar" id="viewerAvatar" style="width:32px;height:32px;"></div>
+        <div><b id="viewerName"></b><span id="viewerMeta"></span></div>
+      </div>
+      <button class="circle-btn" id="viewerClose"><svg class="icon"><use href="#i-x"/></svg></button>
+    </div>
+
+    <div class="viewer-tapzones">
+      <div id="zonePrev"></div>
+      <div id="zoneNext"></div>
+    </div>
+
+    <div class="viewer-rail-left">
+      <svg class="meter" id="viewerMeter" viewBox="0 0 36 36" width="52" height="52">
+        <circle class="meter-track" cx="18" cy="18" r="15"></circle>
+        <circle class="meter-fill" cx="18" cy="18" r="15"></circle>
+        <text x="18" y="21" class="meter-text"></text>
+      </svg>
+      <div class="day-pill"><b>12 days</b>ago</div>
+    </div>
+
+    <div class="viewer-rail-right">
+      <div class="action"><button class="circle-btn" id="viewerLike"><svg class="icon"><use href="#i-heart"/></svg></button><span class="count" id="viewerLikeCount"></span></div>
+      <div class="action"><button class="circle-btn" id="viewerDislike"><svg class="icon"><use href="#i-thumbs-down"/></svg></button><span class="count" id="viewerDislikeCount"></span></div>
+      <div class="rule"></div>
+      <div class="action"><button class="circle-btn" data-action="toast" data-msg="Comments opening…"><svg class="icon"><use href="#i-comment"/></svg></button><span class="count" id="viewerCommentCount"></span></div>
+      <div class="action"><button class="circle-btn" id="viewerSave"><svg class="icon"><use href="#i-bookmark"/></svg></button><span class="count" id="viewerSaveCount"></span></div>
+    </div>
+
+    <div class="viewer-bottom">
+      <div class="viewer-follow-row">
+        <button class="follow-btn" id="viewerFollow">Follow</button>
+      </div>
+      <div class="viewer-caption" id="viewerCaption"></div>
+      <div class="viewer-likes"><div class="avatar grad-3" style="width:16px;height:16px;"></div><span id="viewerLikesLine"></span></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="js/i18n.js"></script>
+<script src="js/app.js" defer></script>
+</body>
+</html>

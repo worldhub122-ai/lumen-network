@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — Lumen</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ ICON SPRITE ============ -->
+<svg style="display:none">
+  <symbol id="i-aperture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    <circle cx="12" cy="12" r="9.5"/>
+    <line x1="14.3" y1="8" x2="20" y2="17.9"/>
+    <line x1="9.7" y1="8" x2="21.1" y2="8"/>
+    <line x1="7.4" y1="12" x2="13.1" y2="2.1"/>
+    <line x1="9.7" y1="16" x2="4" y2="6.1"/>
+    <line x1="14.3" y1="16" x2="2.8" y2="16"/>
+    <line x1="16.6" y1="12" x2="10.9" y2="21.9"/>
+  </symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 5 8 12l7 7"/>
+  </symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/>
+    <circle cx="12" cy="12" r="3"/>
+  </symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 3l18 18"/>
+    <path d="M10.6 5.2A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a17.7 17.7 0 0 1-3.2 4.1M6.5 6.6C3.9 8.3 2 12 2 12s3.6 7 10 7c1.4 0 2.6-.3 3.7-.8"/>
+    <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>
+  </symbol>
+  <symbol id="i-google" viewBox="0 0 24 24">
+    <text x="12" y="17" font-family="Arial, sans-serif" font-weight="700" font-size="15" text-anchor="middle" fill="currentColor">G</text>
+  </symbol>
+  <symbol id="i-github" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48 0-.24-.01-1.04-.01-1.89-2.78.61-3.37-1.21-3.37-1.21-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.03a9.4 9.4 0 0 1 5 0c1.91-1.3 2.75-1.03 2.75-1.03.55 1.37.2 2.39.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.85-2.34 4.7-4.57 4.94.36.31.68.92.68 1.86 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/>
+  </symbol>
+</svg>
+
+<div class="auth-shell">
+
+  <!-- ============ CINEMATIC SCENE ============ -->
+  <section class="auth-scene" aria-hidden="true">
+    <div class="auth-scene-bg"></div>
+    <div class="auth-scene-grain"></div>
+    <div class="auth-scene-vignette"></div>
+    <svg class="auth-aperture-mark"><use href="#i-aperture"/></svg>
+
+    <div class="auth-scene-top">
+      <div class="brand">
+        <svg class="icon"><use href="#i-aperture"/></svg>
+        <span class="brand-name">Lum<em>en</em></span>
+      </div>
+      <span class="auth-scene-tag" data-i18n="brandTag">Rate. Shoot. Discover.</span>
+    </div>
+
+    <div class="auth-scene-caption">
+      <div class="meter-wrap" id="sceneMeter"></div>
+      <div class="auth-scene-caption-text">
+        <p id="sceneCaption" data-i18n="caption1">Chasing light before it disappears.</p>
+        <span class="auth-scene-index" id="sceneIndex">01 / 03</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AUTH PANEL ============ -->
+  <section class="auth-panel">
+    <div class="auth-panel-top">
+      <a class="auth-back" href="index.html">
+        <svg class="icon"><use href="#i-chevron-left"/></svg>
+        <span data-i18n="backToHome">Back to Lumen</span>
+      </a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+        <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-other">AR</span>
+      </button>
+    </div>
+
+    <div class="auth-card">
+      <h1 data-i18n="welcomeBack">Welcome back to the darkroom.</h1>
+      <p class="auth-sub" data-i18n="welcomeBackSub">Sign in to rate today's frames and keep your own gallery growing.</p>
+
+      <form id="loginForm" class="auth-form" novalidate>
+        <div class="field">
+          <input type="email" id="email" name="email" required autocomplete="email" placeholder=" ">
+          <label for="email" data-i18n="emailLabel">Email address</label>
+        </div>
+
+        <div class="field field-password">
+          <input type="password" id="password" name="password" required autocomplete="current-password" placeholder=" ">
+          <label for="password" data-i18n="passwordLabel">Password</label>
+          <button type="button" class="field-toggle" id="pwToggle" aria-pressed="false" data-i18n-aria="showPassword" aria-label="Show password">
+            <svg class="icon i-eye"><use href="#i-eye"/></svg>
+            <svg class="icon i-eye-off" hidden><use href="#i-eye-off"/></svg>
+          </button>
+        </div>
+
+        <div class="auth-row">
+          <label class="check">
+            <input type="checkbox" id="remember">
+            <span class="check-box"></span>
+            <span data-i18n="rememberMe">Remember me</span>
+          </label>
+          <a href="#" class="auth-link" data-action="stub" data-msg="Password reset isn't wired to a backend yet." data-i18n="forgotPasswordQ">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn-primary auth-submit" id="submitBtn">
+          <span data-i18n="signIn">Sign in</span>
+        </button>
+      </form>
+
+      <div class="auth-divider"><span data-i18n="orContinueWith">or continue with</span></div>
+
+      <div class="auth-oauth">
+        <button type="button" class="btn-oauth" data-action="stub" data-msg="Google sign-in needs a real OAuth backend." data-i18n-aria="continueWithGoogle" aria-label="Continue with Google">
+          <svg class="icon"><use href="#i-google"/></svg><span data-i18n="continueWithGoogle">Continue with Google</span>
+        </button>
+        <button type="button" class="btn-oauth" data-action="stub" data-msg="GitHub sign-in needs a real OAuth backend." data-i18n-aria="continueWithGithub" aria-label="Continue with GitHub">
+          <svg class="icon"><use href="#i-github"/></svg><span data-i18n="continueWithGithub">Continue with GitHub</span>
+        </button>
+      </div>
+
+      <p class="auth-foot">
+        <span data-i18n="noAccount">New to Lumen?</span>
+        <a href="#" data-action="stub" data-msg="Registration isn't built yet — it's next on the list." data-i18n="createAccount">Create an account</a>
+      </p>
+    </div>
+
+    <p class="auth-note" data-i18n="authNote">This is a concept interface — no account is created and nothing is stored.</p>
+  </section>
+
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="js/i18n.js"></script>
+<script src="js/login.js" defer></script>
+</body>
+</html>
