@@ -73,6 +73,36 @@
   <symbol id="i-film" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
     <rect x="3.5" y="4" width="17" height="16" rx="1.6"/><path d="M8 4v16M16 4v16M3.5 9h4.5M16 9h4.5M3.5 15h4.5M16 15h4.5"/>
   </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12.5 9.5 17 19 6.5"/>
+  </symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.5 2.5L16 9.5"/>
+  </symbol>
+  <symbol id="i-paperclip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21.4 11.1 12.2 20.3a5 5 0 0 1-7.1-7.1L14.5 3.8a3.5 3.5 0 0 1 5 5L10.2 18a1.5 1.5 0 0 1-2.1-2.1l8.1-8.1"/>
+  </symbol>
+  <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="2.2"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="m21 15.5-5-5-8.5 8.5"/>
+  </symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><line x1="12" y1="17.5" x2="12" y2="21.5"/><line x1="8" y1="21.5" x2="16" y2="21.5"/>
+  </symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M7 4.5v15l13-7.5Z"/>
+  </symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor">
+    <rect x="6.5" y="4.5" width="4.2" height="15"/><rect x="13.3" y="4.5" width="4.2" height="15"/>
+  </symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15v3.5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V15"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><line x1="12" y1="14.5" x2="12" y2="3"/>
+  </symbol>
+  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13.5 2.5H7a1.5 1.5 0 0 0-1.5 1.5v16A1.5 1.5 0 0 0 7 21.5h10a1.5 1.5 0 0 0 1.5-1.5V8Z"/><path d="M13.5 2.5V8H18.5"/>
+  </symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 6.5h16"/><path d="M8.5 6.5v-2a1.5 1.5 0 0 1 1.5-1.5h4a1.5 1.5 0 0 1 1.5 1.5v2"/><path d="M18.3 6.5 17.5 19a2 2 0 0 1-2 1.9H8.5a2 2 0 0 1-2-1.9L5.7 6.5"/>
+  </symbol>
 </svg>
 
 <!-- ============ APP SHELL ============ -->
@@ -95,8 +125,9 @@
       <button class="nav-item" data-action="toast" data-msg="Upload composer opening…">
         <svg class="icon"><use href="#i-plus"/></svg><span class="label" data-i18n="upload">Create</span>
       </button>
-      <button class="nav-item" data-action="toast" data-msg="No new notifications right now.">
+      <button class="nav-item" data-view="notifications">
         <svg class="icon"><use href="#i-bell"/></svg><span class="label" data-i18n="notifications">Notifications</span>
+        <span class="nav-badge" id="notifBadge" hidden></span>
       </button>
       <button class="nav-item" data-view="profile">
         <svg class="icon"><use href="#i-user"/></svg><span class="label" data-i18n="profile">Profile</span>
@@ -129,7 +160,7 @@
         </div>
         <div class="topbar-actions">
           <button class="icon-btn" data-action="toast" data-msg="Search coming into focus soon." data-i18n-title="search" title="Search"><svg class="icon"><use href="#i-search"/></svg></button>
-          <button class="icon-btn" data-action="toast" data-msg="Message requests are empty." data-i18n-title="messages" title="Messages"><svg class="icon"><use href="#i-send"/></svg></button>
+          <button class="icon-btn" data-view="messages" data-i18n-title="messages" title="Messages"><svg class="icon"><use href="#i-send"/></svg><span class="nav-badge nav-badge-topbar" id="msgBadge" hidden></span></button>
         </div>
       </div>
 
@@ -175,6 +206,92 @@
 
       <div id="galleryPanel" class="gallery-grid"></div>
       <div id="tagsPanel" class="tags-panel" style="display:none;"></div>
+    </section>
+
+    <!-- NOTIFICATIONS VIEW -->
+    <section class="view" id="view-notifications">
+      <div class="topbar">
+        <h2 class="view-title" data-i18n="notifications">Notifications</h2>
+        <button class="text-action" id="markAllReadBtn" data-i18n="markAllRead">Mark all as read</button>
+      </div>
+
+      <div id="notifNewGroup">
+        <div class="eyebrow notif-eyebrow" data-i18n="newNotifications">New</div>
+        <div class="notif-list" id="notifNewList"></div>
+      </div>
+      <div id="notifEarlierGroup">
+        <div class="eyebrow notif-eyebrow" data-i18n="earlier">Earlier</div>
+        <div class="notif-list" id="notifEarlierList"></div>
+      </div>
+    </section>
+
+    <!-- MESSAGES VIEW -->
+    <section class="view" id="view-messages">
+      <div class="msg-layout">
+        <div class="msg-list-pane">
+          <div class="msg-list-head">
+            <h2 class="view-title" data-i18n="messages">Messages</h2>
+          </div>
+          <div class="msg-list" id="msgList"></div>
+        </div>
+        <div class="msg-thread-pane" id="msgThreadPane">
+          <div class="msg-empty" id="msgEmptyState">
+            <svg class="icon"><use href="#i-send"/></svg>
+            <h3 data-i18n="noConversation">Your messages</h3>
+            <p data-i18n="noConversationSub">Pick a conversation from the list to see it here.</p>
+          </div>
+          <div class="msg-thread" id="msgThread" hidden>
+            <div class="msg-thread-head">
+              <button class="circle-btn-light msg-back" id="msgBackBtn" aria-label="Back">
+                <svg class="icon"><use href="#i-chevron-left"/></svg>
+              </button>
+              <div class="avatar" id="threadAvatar" style="width:36px;height:36px;"></div>
+              <div class="msg-thread-who"><b id="threadName"></b><span id="threadStatus" data-i18n="activeRecently">Active recently</span></div>
+            </div>
+            <div class="msg-bubbles" id="msgBubbles"></div>
+            <form class="msg-composer" id="msgComposer">
+              <div class="attach-wrap">
+                <button type="button" class="circle-btn-light msg-attach-btn" id="attachBtn" data-i18n-aria="attachFile" aria-label="Attach">
+                  <svg class="icon"><use href="#i-paperclip"/></svg>
+                </button>
+                <div class="attach-menu" id="attachMenu" hidden>
+                  <button type="button" data-attach="media">
+                    <svg class="icon"><use href="#i-image"/></svg><span data-i18n="sendPhotoVideo">Photo or video</span>
+                  </button>
+                  <button type="button" data-attach="file">
+                    <svg class="icon"><use href="#i-file"/></svg><span data-i18n="sendDocument">Document</span>
+                  </button>
+                </div>
+              </div>
+
+              <input type="file" id="mediaInput" accept="image/*,video/*" multiple hidden>
+              <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.txt,.csv" multiple hidden>
+
+              <div class="composer-input-wrap" id="composerInputWrap">
+                <input type="text" id="msgInput" data-i18n-placeholder="typeMessage" placeholder="Type a message…" autocomplete="off">
+              </div>
+
+              <div class="recording-indicator" id="recordingIndicator">
+                <span class="recording-dot"></span>
+                <span class="recording-time" id="recordingTime">0:00</span>
+                <span class="recording-hint" data-i18n="recordingVoice">Recording…</span>
+              </div>
+
+              <button type="button" class="circle-btn-light msg-cancel-record" id="cancelRecordBtn" data-i18n-aria="cancelRecording" aria-label="Cancel recording">
+                <svg class="icon"><use href="#i-trash"/></svg>
+              </button>
+
+              <button type="button" class="circle-btn-brass msg-mic-btn" id="micBtn" data-i18n-aria="recordVoice" aria-label="Record voice message">
+                <svg class="icon"><use href="#i-mic"/></svg>
+              </button>
+
+              <button type="submit" class="circle-btn-brass" id="sendBtn" aria-label="Send" hidden>
+                <svg class="icon"><use href="#i-send"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </section>
 
   </main>
