@@ -772,6 +772,34 @@ document.querySelectorAll('[data-view]').forEach(btn=>{
   });
 });
 
+/* ============================================================
+   UPLOAD MENU (Create dropdown — nav item + rail CTA)
+   ============================================================ */
+function wireUploadMenu(btnId, menuId){
+  const btn = document.getElementById(btnId);
+  const menu = document.getElementById(menuId);
+  if(!btn || !menu) return;
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const willOpen = menu.hidden;
+    document.querySelectorAll('.upload-menu').forEach(m=>{ m.hidden = true; });
+    menu.hidden = !willOpen;
+  });
+  menu.querySelectorAll('[data-action="toast"]').forEach(item=>{
+    item.addEventListener('click', ()=>{ menu.hidden = true; });
+  });
+}
+wireUploadMenu('navCreateBtn', 'navCreateMenu');
+wireUploadMenu('railCreateBtn', 'railCreateMenu');
+document.addEventListener('click', (e)=>{
+  document.querySelectorAll('.upload-menu').forEach(menu=>{
+    const trigger = menu.previousElementSibling;
+    if(!menu.hidden && !menu.contains(e.target) && e.target !== trigger && !(trigger && trigger.contains(e.target))){
+      menu.hidden = true;
+    }
+  });
+});
+
 document.querySelectorAll('.feed-tab').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('.feed-tab').forEach(b=>b.classList.remove('active'));

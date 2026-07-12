@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New reel — Lumen</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ ICON SPRITE ============ -->
+<svg style="display:none">
+  <symbol id="i-aperture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    <circle cx="12" cy="12" r="9.5"/>
+    <line x1="14.3" y1="8" x2="20" y2="17.9"/>
+    <line x1="9.7" y1="8" x2="21.1" y2="8"/>
+    <line x1="7.4" y1="12" x2="13.1" y2="2.1"/>
+    <line x1="9.7" y1="16" x2="4" y2="6.1"/>
+    <line x1="14.3" y1="16" x2="2.8" y2="16"/>
+    <line x1="16.6" y1="12" x2="10.9" y2="21.9"/>
+  </symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 5 8 12l7 7"/>
+  </symbol>
+  <symbol id="i-film" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+    <rect x="3.5" y="4" width="17" height="16" rx="1.6"/><path d="M8 4v16M16 4v16M3.5 9h4.5M16 9h4.5M3.5 15h4.5M16 15h4.5"/>
+  </symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <path d="M5 5l14 14M19 5 5 19"/>
+  </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12.5 9.5 17 19 6.5"/>
+  </symbol>
+</svg>
+
+<div class="auth-shell">
+
+  <!-- ============ CINEMATIC SCENE ============ -->
+  <section class="auth-scene" aria-hidden="true">
+    <div class="auth-scene-bg"></div>
+    <div class="auth-scene-grain"></div>
+    <div class="auth-scene-vignette"></div>
+    <svg class="auth-aperture-mark"><use href="#i-aperture"/></svg>
+
+    <div class="auth-scene-top">
+      <div class="brand">
+        <svg class="icon"><use href="#i-aperture"/></svg>
+        <span class="brand-name">Lum<em>en</em></span>
+      </div>
+      <span class="auth-scene-tag" data-i18n="brandTag">Rate. Shoot. Discover.</span>
+    </div>
+
+    <div class="auth-scene-caption">
+      <div class="meter-wrap" id="sceneMeter"></div>
+      <div class="auth-scene-caption-text">
+        <p id="sceneCaption" data-i18n="caption1">Chasing light before it disappears.</p>
+        <span class="auth-scene-index" id="sceneIndex">01 / 03</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPOSER PANEL ============ -->
+  <section class="auth-panel">
+    <div class="auth-panel-top">
+      <a class="auth-back" href="index.html">
+        <svg class="icon"><use href="#i-chevron-left"/></svg>
+        <span data-i18n="backToHome">Back to Lumen</span>
+      </a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+        <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-other">AR</span>
+      </button>
+    </div>
+
+    <div class="auth-card">
+
+      <!-- STATE 1: composer form -->
+      <div class="auth-state active" id="stateForm">
+        <h1 data-i18n="createReelTitle">Upload a new reel</h1>
+        <p class="auth-sub" data-i18n="createReelSub">Share a short video clip for the community to discover.</p>
+
+        <form id="reelForm" class="auth-form" novalidate>
+          <label class="dropzone" id="dropzone" for="videoInput">
+            <svg class="icon"><use href="#i-film"/></svg>
+            <p class="dropzone-label" data-i18n="dropVideoLabel">Upload a video</p>
+            <p class="dropzone-hint" data-i18n="dropVideoHint">MP4 or MOV, up to 25MB.</p>
+          </label>
+          <input type="file" id="videoInput" accept="video/mp4,video/quicktime" hidden>
+
+          <div class="field">
+            <textarea id="caption" name="caption" required placeholder=" " rows="3"></textarea>
+            <label for="caption" data-i18n="captionLabel">Caption</label>
+          </div>
+
+          <button type="submit" class="btn-primary auth-submit" id="submitBtn">
+            <span data-i18n="reelSubmitBtn">Publish reel</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- STATE 2: success -->
+      <div class="auth-state auth-center" id="stateDone">
+        <div class="auth-icon-circle is-success">
+          <svg class="icon"><use href="#i-check"/></svg>
+        </div>
+        <h1 data-i18n="reelSuccessTitle">Reel published</h1>
+        <p class="auth-sub" data-i18n="reelSuccessSub">Your reel is live and ready for the community to watch.</p>
+
+        <a href="index.html" class="btn-primary auth-submit" style="display:block;text-align:center;text-decoration:none;box-sizing:border-box;" data-i18n="backToFeed">Back to feed</a>
+      </div>
+
+    </div>
+
+    <p class="auth-note" data-i18n="conceptNote">This is a concept interface — nothing here is sent or stored.</p>
+  </section>
+
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="js/i18n.js"></script>
+<script src="js/create-reel.js" defer></script>
+</body>
+</html>

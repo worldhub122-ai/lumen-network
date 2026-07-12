@@ -10,6 +10,7 @@
     en: {
       home:'Home', login:'Login', register:'Register', forgotPassword:'Forgot Password',
       feed:'Feed', discover:'Discover', reels:'Reels', upload:'Upload', profile:'Profile',
+      newPost:'New Post', newReel:'New Reel', newStory:'New Story', goLive:'Go Live', createAd:'Create Advertisement',
       editProfile:'Edit Profile', saved:'Saved', notifications:'Notifications', messages:'Messages',
       settings:'Settings', search:'Search', ai:'AI', help:'Help', about:'About', privacy:'Privacy',
       terms:'Terms', contact:'Contact', notFound:'Not Found (404)',
@@ -120,11 +121,73 @@
       simulateVerify:'I\u2019ve clicked the link',
       emailVerified:'Email verified',
       emailVerifiedSub:'You\u2019re all set \u2014 your account is ready to go.',
-      continueToLumen:'Continue to Lumen'
+      continueToLumen:'Continue to Lumen',
+
+      /* Create: shared */
+      backToFeed:'Back to feed',
+      mediaTooLarge:'That file is over 25MB \u2014 pick a smaller one.',
+      chooseMediaFirst:'Choose a photo or video first.',
+
+      /* Create: post */
+      createPostTitle:'Share a new frame',
+      createPostSub:'Upload a photo and add a caption for the community to rate.',
+      dropPhotoLabel:'Upload a photo',
+      dropPhotoHint:'JPG or PNG, up to 25MB.',
+      captionLabel:'Caption',
+      postSubmitBtn:'Post',
+      postingLabel:'Posting\u2026',
+      postSuccessTitle:'Frame posted',
+      postSuccessSub:'Your photo is live and ready for the community to rate.',
+
+      /* Create: reel */
+      createReelTitle:'Upload a new reel',
+      createReelSub:'Share a short video clip for the community to discover.',
+      dropVideoLabel:'Upload a video',
+      dropVideoHint:'MP4 or MOV, up to 25MB.',
+      reelSubmitBtn:'Publish reel',
+      publishingLabel:'Publishing\u2026',
+      reelSuccessTitle:'Reel published',
+      reelSuccessSub:'Your reel is live and ready for the community to watch.',
+
+      /* Create: story */
+      createStoryTitle:'Add to your story',
+      createStorySub:'Stories disappear after 24 hours \u2014 share a quick moment.',
+      dropStoryLabel:'Upload a photo or video',
+      dropStoryHint:'JPG, PNG, MP4 or MOV, up to 25MB.',
+      storySubmitBtn:'Add to story',
+      addingStoryLabel:'Adding\u2026',
+      storySuccessTitle:'Added to your story',
+      storySuccessSub:'Your story is now visible to your followers for 24 hours.',
+
+      /* Create: go live */
+      goLiveTitle:'Go live',
+      goLiveSub:'Start a live broadcast so your followers can join in real time.',
+      startBroadcastBtn:'Start broadcast',
+      connectingLabel:'Connecting\u2026',
+      liveNowTitle:'You\u2019re live',
+      liveNowSub:'Your broadcast has started \u2014 this is a concept preview only, nothing is actually streamed.',
+      endBroadcastBtn:'End broadcast',
+
+      /* Create: advertisement */
+      createAdTitle:'Create an advertisement',
+      createAdSub:'Set up a campaign to promote your work to a wider audience.',
+      campaignNameLabel:'Campaign name',
+      objectiveLabel:'Objective',
+      objectiveAwareness:'Awareness',
+      objectiveTraffic:'Traffic',
+      objectiveFollowers:'Followers',
+      budgetLabel:'Daily budget',
+      adMediaLabel:'Upload ad creative',
+      adMediaHint:'JPG, PNG or MP4, up to 25MB.',
+      adSubmitBtn:'Submit for review',
+      submittingLabel:'Submitting\u2026',
+      adSuccessTitle:'Ad submitted',
+      adSuccessSub:'Your campaign has been submitted for review. This is a concept preview only.'
     },
     ar: {
       home:'الصفحة الرئيسية', login:'تسجيل الدخول', register:'إنشاء حساب', forgotPassword:'استعادة كلمة المرور',
       feed:'المنشورات', discover:'الاستكشاف', reels:'الفيديوهات القصيرة', upload:'إنشاء منشور', profile:'الملف الشخصي',
+      newPost:'منشور جديد', newReel:'فيديو قصير جديد', newStory:'قصة جديدة', goLive:'بث مباشر', createAd:'إنشاء إعلان',
       editProfile:'تعديل الملف الشخصي', saved:'المنشورات المحفوظة', notifications:'الإشعارات', messages:'الرسائل',
       settings:'الإعدادات', search:'البحث', ai:'أدوات الذكاء الاصطناعي', help:'المساعدة', about:'من نحن', privacy:'سياسة الخصوصية',
       terms:'شروط الاستخدام', contact:'اتصل بنا', notFound:'صفحة الخطأ',
@@ -235,7 +298,68 @@
       simulateVerify:'لقد نقرت على الرابط',
       emailVerified:'تم التحقق من البريد الإلكتروني',
       emailVerifiedSub:'كل شيء جاهز \u2014 حسابك أصبح جاهزًا للاستخدام.',
-      continueToLumen:'المتابعة إلى Lumen'
+      continueToLumen:'المتابعة إلى Lumen',
+
+      /* Create: shared */
+      backToFeed:'العودة إلى المنشورات',
+      mediaTooLarge:'هذا الملف أكبر من 25 ميجابايت — اختر ملفًا أصغر.',
+      chooseMediaFirst:'اختر صورة أو فيديو أولًا.',
+
+      /* Create: post */
+      createPostTitle:'شارك لقطة جديدة',
+      createPostSub:'ارفع صورة وأضف وصفًا ليقيّمه المجتمع.',
+      dropPhotoLabel:'ارفع صورة',
+      dropPhotoHint:'JPG أو PNG، بحد أقصى 25 ميجابايت.',
+      captionLabel:'الوصف',
+      postSubmitBtn:'نشر',
+      postingLabel:'جارٍ النشر\u2026',
+      postSuccessTitle:'تم نشر اللقطة',
+      postSuccessSub:'صورتك متاحة الآن وجاهزة ليقيّمها المجتمع.',
+
+      /* Create: reel */
+      createReelTitle:'ارفع فيديو قصير جديد',
+      createReelSub:'شارك مقطع فيديو قصير ليكتشفه المجتمع.',
+      dropVideoLabel:'ارفع فيديو',
+      dropVideoHint:'MP4 أو MOV، بحد أقصى 25 ميجابايت.',
+      reelSubmitBtn:'نشر الفيديو القصير',
+      publishingLabel:'جارٍ النشر\u2026',
+      reelSuccessTitle:'تم نشر الفيديو القصير',
+      reelSuccessSub:'فيديوك القصير متاح الآن وجاهز ليشاهده المجتمع.',
+
+      /* Create: story */
+      createStoryTitle:'أضف إلى قصتك',
+      createStorySub:'القصص تختفي بعد 24 ساعة — شارك لحظة سريعة.',
+      dropStoryLabel:'ارفع صورة أو فيديو',
+      dropStoryHint:'JPG أو PNG أو MP4 أو MOV، بحد أقصى 25 ميجابايت.',
+      storySubmitBtn:'إضافة إلى القصة',
+      addingStoryLabel:'جارٍ الإضافة\u2026',
+      storySuccessTitle:'تمت الإضافة إلى قصتك',
+      storySuccessSub:'قصتك مرئية الآن لمتابعيك لمدة 24 ساعة.',
+
+      /* Create: go live */
+      goLiveTitle:'بث مباشر',
+      goLiveSub:'ابدأ بثًا مباشرًا حتى ينضم إليك متابعوك في الوقت الفعلي.',
+      startBroadcastBtn:'بدء البث',
+      connectingLabel:'جارٍ الاتصال\u2026',
+      liveNowTitle:'أنت الآن مباشر',
+      liveNowSub:'بدأ بثك المباشر — هذه معاينة مفاهيمية فقط، لا يتم بث أي شيء فعليًا.',
+      endBroadcastBtn:'إنهاء البث',
+
+      /* Create: advertisement */
+      createAdTitle:'إنشاء إعلان',
+      createAdSub:'أنشئ حملة للترويج لأعمالك أمام جمهور أوسع.',
+      campaignNameLabel:'اسم الحملة',
+      objectiveLabel:'الهدف',
+      objectiveAwareness:'الوعي بالعلامة',
+      objectiveTraffic:'الزيارات',
+      objectiveFollowers:'المتابعون',
+      budgetLabel:'الميزانية اليومية',
+      adMediaLabel:'ارفع تصميم الإعلان',
+      adMediaHint:'JPG أو PNG أو MP4، بحد أقصى 25 ميجابايت.',
+      adSubmitBtn:'إرسال للمراجعة',
+      submittingLabel:'جارٍ الإرسال\u2026',
+      adSuccessTitle:'تم إرسال الإعلان',
+      adSuccessSub:'تم إرسال حملتك للمراجعة. هذه معاينة مفاهيمية فقط.'
     }
   };
 
