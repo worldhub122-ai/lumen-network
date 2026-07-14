@@ -55,6 +55,9 @@
   <symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M15 5 8 12l7 7"/>
   </symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 9l6 6 6-6"/>
+  </symbol>
   <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
     <path d="M5 5l14 14M19 5 5 19"/>
   </symbol>
@@ -284,7 +287,10 @@
         <div class="msg-list-pane">
           <div class="msg-list-head">
             <div class="msg-list-head-top">
-              <h2 class="view-title" data-i18n="messages">Messages</h2>
+              <button type="button" class="msg-account-switch" data-action="toast" data-msg="Account switching isn't wired up yet.">
+                <span>sami.frames</span>
+                <svg class="icon"><use href="#i-chevron-down"/></svg>
+              </button>
               <button class="icon-btn" id="newMsgBtn" type="button" data-action="toast" data-msg="Starting a new conversation isn't wired up yet." data-i18n-title="newMessage" title="New message" aria-label="New message">
                 <svg class="icon"><use href="#i-edit"/></svg>
               </button>
@@ -292,6 +298,10 @@
             <div class="msg-search-wrap">
               <svg class="icon"><use href="#i-search"/></svg>
               <input type="text" id="msgSearchInput" data-i18n-placeholder="searchMessages" placeholder="Search messages">
+            </div>
+            <div class="msg-filter-tabs" id="msgFilterTabs">
+              <button type="button" class="msg-filter-tab active" data-msgtab="primary">Primary</button>
+              <button type="button" class="msg-filter-tab" data-msgtab="requests">Requests</button>
             </div>
           </div>
           <div class="msg-list" id="msgList"></div>
@@ -307,11 +317,13 @@
               <button class="circle-btn-light msg-back" id="msgBackBtn" aria-label="Back">
                 <svg class="icon"><use href="#i-chevron-left"/></svg>
               </button>
-              <div class="avatar-wrap">
-                <div class="avatar" id="threadAvatar" style="width:36px;height:36px;"></div>
-                <span class="status-dot" id="threadStatusDot" hidden></span>
-              </div>
-              <div class="msg-thread-who"><b id="threadName"></b><span id="threadStatus" data-i18n="activeRecently">Active recently</span></div>
+              <button type="button" class="msg-thread-identity" data-action="toast" data-msg="Profile preview isn't wired up yet.">
+                <div class="avatar-wrap">
+                  <div class="avatar" id="threadAvatar" style="width:36px;height:36px;"></div>
+                  <span class="status-dot" id="threadStatusDot" hidden></span>
+                </div>
+                <div class="msg-thread-who"><b id="threadName"></b><span id="threadStatus" data-i18n="activeRecently">Active recently</span></div>
+              </button>
               <div class="msg-thread-actions">
                 <button type="button" class="circle-btn-light" data-action="toast" data-msg="Voice calling isn't wired up yet." data-i18n-aria="voiceCall" aria-label="Voice call">
                   <svg class="icon"><use href="#i-phone"/></svg>
@@ -364,9 +376,7 @@
                 <svg class="icon"><use href="#i-mic"/></svg>
               </button>
 
-              <button type="submit" class="circle-btn-brass" id="sendBtn" aria-label="Send" hidden>
-                <svg class="icon"><use href="#i-send"/></svg>
-              </button>
+              <button type="submit" class="msg-send-text" id="sendBtn" hidden>Send</button>
             </form>
           </div>
         </div>

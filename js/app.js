@@ -78,26 +78,29 @@ const notifications = [
   { id:'n7', type:'follow', name:'Ken Duarte', grad:'grad-2', text:'started following you', time:'4d', unread:false, followState:true },
 ];
 
+const MIN = 60*1000, HOUR = 60*MIN, DAY = 24*HOUR;
+const NOW = Date.now();
+
 const conversations = [
-  { id:'c1', name:'Nina Solberg', grad:'grad-2', unread:2, online:true,
+  { id:'c1', name:'Nina Solberg', grad:'grad-2', unread:2, online:true, draft:'',
     messages:[
-      { from:'them', text:'Hey! That golden hour shot is incredible.', time:'10:02' },
-      { from:'me', text:'Thank you! Shot it on the rooftop near the harbor.', time:'10:05' },
-      { from:'them', text:'Loved the low light on this one!', time:'10:07' },
+      { from:'them', type:'text', text:'Hey! That golden hour shot is incredible.', ts: NOW - (2*HOUR + 10*MIN) },
+      { from:'me', type:'text', text:'Thank you! Shot it on the rooftop near the harbor.', ts: NOW - (2*HOUR + 5*MIN) },
+      { from:'them', type:'text', text:'Loved the low light on this one!', ts: NOW - (2*HOUR) },
     ] },
-  { id:'c2', name:'Theo Marsh', grad:'grad-4', unread:0, online:false, lastSeen:'1h ago',
+  { id:'c2', name:'Theo Marsh', grad:'grad-4', unread:0, online:false, lastSeen:'1h ago', draft:'',
     messages:[
-      { from:'them', text:'Where was the street series shot?', time:'Yesterday' },
-      { from:'me', text:'Old town, mostly around 6am before the crowds.', time:'Yesterday' },
+      { from:'them', type:'text', text:'Where was the street series shot?', ts: NOW - (DAY + 3*HOUR) },
+      { from:'me', type:'text', text:'Old town, mostly around 6am before the crowds.', ts: NOW - (DAY + 2*HOUR + 55*MIN) },
     ] },
-  { id:'c3', name:'Elin Vos', grad:'grad-3', unread:0, online:true,
+  { id:'c3', name:'Elin Vos', grad:'grad-3', unread:0, online:true, draft:'',
     messages:[
-      { from:'me', text:'Your still-life set this week was beautiful.', time:'Mon' },
-      { from:'them', text:'That means a lot, thank you 🙏', time:'Mon' },
+      { from:'me', type:'text', text:'Your still-life set this week was beautiful.', ts: NOW - (3*DAY + 4*HOUR) },
+      { from:'them', type:'text', text:'That means a lot, thank you 🙏', ts: NOW - (3*DAY + 3*HOUR + 50*MIN) },
     ] },
-  { id:'c4', name:'Priya Nair', grad:'grad-6', unread:1, online:false, lastSeen:'2d ago',
+  { id:'c4', name:'Priya Nair', grad:'grad-6', unread:1, online:false, lastSeen:'2d ago', draft:'',
     messages:[
-      { from:'them', text:'Are you free to collaborate on a shoot next month?', time:'Sun' },
+      { from:'them', type:'text', text:'Are you free to collaborate on a shoot next month?', ts: NOW - (4*DAY + 6*HOUR) },
     ] },
 ];
 
@@ -138,6 +141,40 @@ function formatDuration(totalSeconds){
   const m = Math.floor(sec / 60);
   const s = sec % 60;
   return `${m}:${String(s).padStart(2,'0')}`;
+}
+function isSameDay(tsA, tsB){
+  const a = new Date(tsA), b = new Date(tsB);
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+function formatClockTime(ts){
+  const d = new Date(ts);
+  let h = d.getHours();
+  const m = d.getMinutes();
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12; if(h === 0) h = 12;
+  return `${h}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+function formatDaySeparator(ts){
+  const d = new Date(ts);
+  const now = new Date();
+  const startOf = x => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const diffDays = Math.round((startOf(now) - startOf(d)) / DAY);
+  let label;
+  if(diffDays <= 0) label = dict().today || 'Today';
+  else if(diffDays === 1) label = dict().yesterday || 'Yesterday';
+  else if(diffDays < 7) label = d.toLocaleDateString(undefined, { weekday:'long' });
+  else label = d.toLocaleDateString(undefined, { month:'short', day:'numeric', year: d.getFullYear() !== now.getFullYear() ? 'numeric' : undefined });
+  return `${label} ${formatClockTime(ts)}`;
+}
+function formatListTime(ts){
+  const diffMin = Math.floor((NOW - ts) / MIN);
+  if(diffMin < 1) return dict().justNow || 'now';
+  if(diffMin < 60) return `${diffMin}${dict().minuteShort || 'm'}`;
+  const diffH = Math.floor(diffMin / 60);
+  if(diffH < 24 && isSameDay(ts, NOW)) return `${diffH}${dict().hourShort || 'h'}`;
+  const diffDays = Math.floor(diffH / 24);
+  if(diffDays < 7) return new Date(ts).toLocaleDateString(undefined, { weekday:'short' });
+  return new Date(ts).toLocaleDateString(undefined, { month:'short', day:'numeric' });
 }
 function showToast(msg){
   const stack = document.getElementById('toastStack');
@@ -386,6 +423,7 @@ renderNotifications();
    ============================================================ */
 let activeConversationId = null;
 let msgSearchQuery = '';
+let msgFilterTab = 'primary'; // 'primary' | 'requests' — Lumen has no message requests yet, mirrors Instagram's inbox tabs
 
 function convPreviewText(last){
   if(!last) return '';
@@ -405,6 +443,12 @@ function convPreviewText(last){
 
 function renderConvList(){
   const list = document.getElementById('msgList');
+
+  if(msgFilterTab === 'requests'){
+    list.innerHTML = `<div class="notif-empty">${dict().noRequests || 'No message requests'}</div>`;
+    return;
+  }
+
   if(!conversations.length){
     list.innerHTML = `<div class="notif-empty" data-i18n="noConversations">${dict().noConversations || 'No conversations yet'}</div>`;
     return;
@@ -424,7 +468,7 @@ function renderConvList(){
         ${c.online ? '<span class="status-dot"></span>' : ''}
       </div>
       <div class="msg-row-body">
-        <div class="msg-row-top"><b>${c.name}</b><span>${last ? last.time : ''}</span></div>
+        <div class="msg-row-top"><b>${escapeHtml(c.name)}</b><span>${last ? formatListTime(last.ts) : ''}</span></div>
         <div class="msg-row-preview">${preview}</div>
       </div>
       ${c.unread ? '<span class="msg-row-dot"></span>' : ''}
@@ -439,6 +483,14 @@ if(msgSearchInput){
     renderConvList();
   });
 }
+
+document.querySelectorAll('#msgFilterTabs [data-msgtab]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    msgFilterTab = btn.dataset.msgtab;
+    document.querySelectorAll('#msgFilterTabs [data-msgtab]').forEach(b=>b.classList.toggle('active', b === btn));
+    renderConvList();
+  });
+});
 
 function updateMsgBadge(){
   const count = conversations.filter(c=>c.unread > 0).length;
@@ -458,10 +510,10 @@ function voiceWaveBars(){
 function bubbleContent(m){
   const d = dict();
   if(m.type === 'image'){
-    return `<div class="msg-media-wrap"><img src="${m.src}" class="msg-media-img" alt="" loading="lazy"></div><span class="msg-bubble-time">${m.time}</span>`;
+    return `<div class="msg-media-wrap"><img src="${m.src}" class="msg-media-img" alt="" loading="lazy"></div>`;
   }
   if(m.type === 'video'){
-    return `<div class="msg-media-wrap"><video src="${m.src}" class="msg-media-video" controls preload="metadata"></video></div><span class="msg-bubble-time">${m.time}</span>`;
+    return `<div class="msg-media-wrap"><video src="${m.src}" class="msg-media-video" controls preload="metadata"></video></div>`;
   }
   if(m.type === 'file'){
     const ext = (m.fileName || '').split('.').pop().slice(0,4).toUpperCase();
@@ -469,7 +521,7 @@ function bubbleContent(m){
         <div class="msg-file-icon"><svg class="icon"><use href="#i-file"/></svg><span class="msg-file-ext">${escapeHtml(ext)}</span></div>
         <div class="msg-file-info"><b>${escapeHtml(m.fileName||'')}</b><span>${bytesToSize(m.fileSize)}</span></div>
         <a class="msg-file-download" href="${m.src}" download="${escapeHtml(m.fileName||'')}" aria-label="${d.download || 'Download'}"><svg class="icon"><use href="#i-download"/></svg></a>
-      </div><span class="msg-bubble-time">${m.time}</span>`;
+      </div>`;
   }
   if(m.type === 'voice'){
     const audioId = m._audioId || (m._audioId = 'voice_' + Math.random().toString(36).slice(2,9));
@@ -481,9 +533,9 @@ function bubbleContent(m){
         </button>
         <div class="voice-wave">${voiceWaveBars()}</div>
         <span class="voice-duration">${formatDuration(m.duration)}</span>
-      </div><span class="msg-bubble-time">${m.time}</span>`;
+      </div>`;
   }
-  return `${escapeHtml(m.text)}<span class="msg-bubble-time">${m.time}</span>`;
+  return escapeHtml(m.text);
 }
 
 function renderThread(){
@@ -503,15 +555,31 @@ function renderThread(){
   const statusEl = document.getElementById('threadStatus');
   if(statusDot) statusDot.hidden = !c.online;
   if(statusEl) statusEl.textContent = c.online ? (dict().activeNow || 'Active now') : `${dict().activeLast || 'Active'} ${c.lastSeen || ''}`.trim();
+
+  // Instagram shows "Seen" under the last message you sent once the other
+  // person has replied after it — find that message's index, if any.
+  let lastMineIdx = -1;
+  for(let i = c.messages.length - 1; i >= 0; i--){
+    if(c.messages[i].from === 'me'){ lastMineIdx = i; break; }
+  }
+  const seenApplies = lastMineIdx > -1 && c.messages.slice(lastMineIdx + 1).some(m => m.from === 'them');
+
   const bubbles = document.getElementById('msgBubbles');
+  const GAP_FOR_SEPARATOR = 30 * MIN;
   bubbles.innerHTML = c.messages.map((m,i)=>{
     const isMedia = m.type && m.type !== 'text';
     const prev = c.messages[i-1];
     const next = c.messages[i+1];
-    const groupedWithPrev = prev && prev.from === m.from;
-    const groupedWithNext = next && next.from === m.from;
+    const bigGapBefore = !prev || (m.ts - prev.ts) > GAP_FOR_SEPARATOR || !isSameDay(m.ts, prev.ts);
+    const separator = bigGapBefore ? `<div class="msg-day-sep">${formatDaySeparator(m.ts)}</div>` : '';
+    const groupedWithPrev = !bigGapBefore && prev && prev.from === m.from;
+    const groupedWithNext = next && next.from === m.from && !( (next.ts - m.ts) > GAP_FOR_SEPARATOR || !isSameDay(next.ts, m.ts) );
     const groupClass = (groupedWithPrev ? ' is-grouped-prev' : '') + (groupedWithNext ? ' is-grouped-next' : '');
-    return `<div class="msg-bubble ${m.from}${isMedia ? ' msg-bubble-media' : ''}${groupClass}">${bubbleContent(m)}</div>`;
+    const bubbleHtml = `<div class="msg-bubble ${m.from}${isMedia ? ' msg-bubble-media' : ''}${groupClass}">${bubbleContent(m)}</div>`;
+    const seenHtml = (i === lastMineIdx && seenApplies)
+      ? `<div class="msg-seen"><div class="avatar ${c.grad}"></div><span>${dict().seen || 'Seen'}</span></div>`
+      : '';
+    return separator + bubbleHtml + seenHtml;
   }).join('');
   bubbles.querySelectorAll('audio').forEach(audio=>{
     audio.addEventListener('ended', ()=>{
@@ -566,9 +634,16 @@ document.getElementById('msgBubbles').addEventListener('click', (e)=>{
 
 function openConversation(id){
   if(mediaRecorder && mediaRecorder.state === 'recording') cancelActiveRecording();
+
+  // Save the draft of the conversation we're leaving, like Instagram does,
+  // so switching threads never sends a message to the wrong person.
+  const prev = conversations.find(x=>x.id === activeConversationId);
+  if(prev && msgInput) prev.draft = msgInput.value;
+
   activeConversationId = id;
   const c = conversations.find(x=>x.id === id);
   if(c) c.unread = 0;
+  if(msgInput){ msgInput.value = (c && c.draft) || ''; updateComposerButtons(); }
   document.querySelector('.msg-layout').classList.add('thread-open');
   renderConvList();
   renderThread();
@@ -607,7 +682,7 @@ function queueCannedReply(convId){
   setTimeout(()=>{
     const c = conversations.find(x=>x.id === convId);
     if(!c || activeConversationId !== convId) return;
-    c.messages.push({ from:'them', type:'text', text: canedReplies[Math.floor(Math.random()*canedReplies.length)], time:'Now' });
+    c.messages.push({ from:'them', type:'text', text: canedReplies[Math.floor(Math.random()*canedReplies.length)], ts: Date.now() });
     renderThread();
     renderConvList();
   }, 1200);
@@ -616,7 +691,7 @@ function queueCannedReply(convId){
 function sendChatMessage(payload){
   const c = conversations.find(x=>x.id === activeConversationId);
   if(!c) return;
-  c.messages.push(Object.assign({ from:'me', time:'Now' }, payload));
+  c.messages.push(Object.assign({ from:'me', ts: Date.now() }, payload));
   renderThread();
   renderConvList();
   queueCannedReply(c.id);
@@ -755,7 +830,7 @@ function finishRecording(send){
       const url = URL.createObjectURL(blob);
       const c = conversations.find(x=>x.id === convId);
       if(c){
-        c.messages.push({ from:'me', type:'voice', src:url, duration:elapsed, time:'Now' });
+        c.messages.push({ from:'me', type:'voice', src:url, duration:elapsed, ts: Date.now() });
         if(activeConversationId === convId){ renderThread(); renderConvList(); }
         queueCannedReply(convId);
       }
