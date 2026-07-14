@@ -103,6 +103,21 @@
   <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 6.5h16"/><path d="M8.5 6.5v-2a1.5 1.5 0 0 1 1.5-1.5h4a1.5 1.5 0 0 1 1.5 1.5v2"/><path d="M18.3 6.5 17.5 19a2 2 0 0 1-2 1.9H8.5a2 2 0 0 1-2-1.9L5.7 6.5"/>
   </symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 15.5V20h4.5L20 8.5l-4.5-4.5L4 15.5Z"/><path d="m14 5.5 4.5 4.5"/>
+  </symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1.2 1.2 0 0 1 1.2-.3c1.3.43 2.7.66 4.1.66.66 0 1.2.54 1.2 1.2V21c0 .66-.54 1.2-1.2 1.2C10.6 22.2 1.8 13.4 1.8 2.4c0-.66.54-1.2 1.2-1.2H7c.66 0 1.2.54 1.2 1.2 0 1.4.23 2.8.66 4.1.13.42.02.9-.3 1.2L6.6 10.8Z"/>
+  </symbol>
+  <symbol id="i-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2.5" y="6" width="13" height="12" rx="1.8"/><path d="m15.5 10.5 6-3.2v9.4l-6-3.2Z"/>
+  </symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9.5"/><line x1="12" y1="11" x2="12" y2="16.5"/><circle cx="12" cy="7.7" r=".25" fill="currentColor" stroke="none"/>
+  </symbol>
+  <symbol id="i-smile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9.5"/><path d="M8 14c1 1.4 2.4 2.2 4 2.2s3-.8 4-2.2"/><circle cx="8.7" cy="9.8" r=".9" fill="currentColor" stroke="none"/><circle cx="15.3" cy="9.8" r=".9" fill="currentColor" stroke="none"/>
+  </symbol>
 </svg>
 
 <!-- ============ APP SHELL ============ -->
@@ -268,7 +283,16 @@
       <div class="msg-layout">
         <div class="msg-list-pane">
           <div class="msg-list-head">
-            <h2 class="view-title" data-i18n="messages">Messages</h2>
+            <div class="msg-list-head-top">
+              <h2 class="view-title" data-i18n="messages">Messages</h2>
+              <button class="icon-btn" id="newMsgBtn" type="button" data-action="toast" data-msg="Starting a new conversation isn't wired up yet." data-i18n-title="newMessage" title="New message" aria-label="New message">
+                <svg class="icon"><use href="#i-edit"/></svg>
+              </button>
+            </div>
+            <div class="msg-search-wrap">
+              <svg class="icon"><use href="#i-search"/></svg>
+              <input type="text" id="msgSearchInput" data-i18n-placeholder="searchMessages" placeholder="Search messages">
+            </div>
           </div>
           <div class="msg-list" id="msgList"></div>
         </div>
@@ -283,8 +307,22 @@
               <button class="circle-btn-light msg-back" id="msgBackBtn" aria-label="Back">
                 <svg class="icon"><use href="#i-chevron-left"/></svg>
               </button>
-              <div class="avatar" id="threadAvatar" style="width:36px;height:36px;"></div>
+              <div class="avatar-wrap">
+                <div class="avatar" id="threadAvatar" style="width:36px;height:36px;"></div>
+                <span class="status-dot" id="threadStatusDot" hidden></span>
+              </div>
               <div class="msg-thread-who"><b id="threadName"></b><span id="threadStatus" data-i18n="activeRecently">Active recently</span></div>
+              <div class="msg-thread-actions">
+                <button type="button" class="circle-btn-light" data-action="toast" data-msg="Voice calling isn't wired up yet." data-i18n-aria="voiceCall" aria-label="Voice call">
+                  <svg class="icon"><use href="#i-phone"/></svg>
+                </button>
+                <button type="button" class="circle-btn-light" data-action="toast" data-msg="Video calling isn't wired up yet." data-i18n-aria="videoCall" aria-label="Video call">
+                  <svg class="icon"><use href="#i-video"/></svg>
+                </button>
+                <button type="button" class="circle-btn-light" data-action="toast" data-msg="Conversation info isn't wired up yet." data-i18n-aria="convInfo" aria-label="Conversation info">
+                  <svg class="icon"><use href="#i-info"/></svg>
+                </button>
+              </div>
             </div>
             <div class="msg-bubbles" id="msgBubbles"></div>
             <form class="msg-composer" id="msgComposer">
@@ -307,6 +345,9 @@
 
               <div class="composer-input-wrap" id="composerInputWrap">
                 <input type="text" id="msgInput" data-i18n-placeholder="typeMessage" placeholder="Type a message…" autocomplete="off">
+                <button type="button" class="composer-emoji-btn" data-action="toast" data-msg="Emoji picker isn't wired up yet." data-i18n-aria="emoji" aria-label="Emoji">
+                  <svg class="icon"><use href="#i-smile"/></svg>
+                </button>
               </div>
 
               <div class="recording-indicator" id="recordingIndicator">

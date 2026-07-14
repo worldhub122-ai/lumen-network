@@ -79,23 +79,23 @@ const notifications = [
 ];
 
 const conversations = [
-  { id:'c1', name:'Nina Solberg', grad:'grad-2', unread:2,
+  { id:'c1', name:'Nina Solberg', grad:'grad-2', unread:2, online:true,
     messages:[
       { from:'them', text:'Hey! That golden hour shot is incredible.', time:'10:02' },
       { from:'me', text:'Thank you! Shot it on the rooftop near the harbor.', time:'10:05' },
       { from:'them', text:'Loved the low light on this one!', time:'10:07' },
     ] },
-  { id:'c2', name:'Theo Marsh', grad:'grad-4', unread:0,
+  { id:'c2', name:'Theo Marsh', grad:'grad-4', unread:0, online:false, lastSeen:'1h ago',
     messages:[
       { from:'them', text:'Where was the street series shot?', time:'Yesterday' },
       { from:'me', text:'Old town, mostly around 6am before the crowds.', time:'Yesterday' },
     ] },
-  { id:'c3', name:'Elin Vos', grad:'grad-3', unread:0,
+  { id:'c3', name:'Elin Vos', grad:'grad-3', unread:0, online:true,
     messages:[
       { from:'me', text:'Your still-life set this week was beautiful.', time:'Mon' },
       { from:'them', text:'That means a lot, thank you 🙏', time:'Mon' },
     ] },
-  { id:'c4', name:'Priya Nair', grad:'grad-6', unread:1,
+  { id:'c4', name:'Priya Nair', grad:'grad-6', unread:1, online:false, lastSeen:'2d ago',
     messages:[
       { from:'them', text:'Are you free to collaborate on a shoot next month?', time:'Sun' },
     ] },
@@ -385,6 +385,7 @@ renderNotifications();
    RENDER: MESSAGES
    ============================================================ */
 let activeConversationId = null;
+let msgSearchQuery = '';
 
 function convPreviewText(last){
   if(!last) return '';
@@ -408,11 +409,20 @@ function renderConvList(){
     list.innerHTML = `<div class="notif-empty" data-i18n="noConversations">${dict().noConversations || 'No conversations yet'}</div>`;
     return;
   }
-  list.innerHTML = conversations.map(c=>{
+  const q = msgSearchQuery.trim().toLowerCase();
+  const filtered = q ? conversations.filter(c => c.name.toLowerCase().includes(q)) : conversations;
+  if(!filtered.length){
+    list.innerHTML = `<div class="notif-empty">${dict().noSearchResults || 'No results found'}</div>`;
+    return;
+  }
+  list.innerHTML = filtered.map(c=>{
     const last = c.messages[c.messages.length - 1];
     const preview = convPreviewText(last);
     return `<button class="msg-row ${c.unread ? 'unread':''} ${c.id === activeConversationId ? 'active':''}" data-conv="${c.id}">
-      <div class="avatar ${c.grad}"></div>
+      <div class="avatar-wrap">
+        <div class="avatar ${c.grad}"></div>
+        ${c.online ? '<span class="status-dot"></span>' : ''}
+      </div>
       <div class="msg-row-body">
         <div class="msg-row-top"><b>${c.name}</b><span>${last ? last.time : ''}</span></div>
         <div class="msg-row-preview">${preview}</div>
@@ -420,6 +430,14 @@ function renderConvList(){
       ${c.unread ? '<span class="msg-row-dot"></span>' : ''}
     </button>`;
   }).join('');
+}
+
+const msgSearchInput = document.getElementById('msgSearchInput');
+if(msgSearchInput){
+  msgSearchInput.addEventListener('input', ()=>{
+    msgSearchQuery = msgSearchInput.value;
+    renderConvList();
+  });
 }
 
 function updateMsgBadge(){
@@ -481,10 +499,19 @@ function renderThread(){
   thread.hidden = false;
   document.getElementById('threadAvatar').className = 'avatar ' + c.grad;
   document.getElementById('threadName').textContent = c.name;
+  const statusDot = document.getElementById('threadStatusDot');
+  const statusEl = document.getElementById('threadStatus');
+  if(statusDot) statusDot.hidden = !c.online;
+  if(statusEl) statusEl.textContent = c.online ? (dict().activeNow || 'Active now') : `${dict().activeLast || 'Active'} ${c.lastSeen || ''}`.trim();
   const bubbles = document.getElementById('msgBubbles');
-  bubbles.innerHTML = c.messages.map(m=>{
+  bubbles.innerHTML = c.messages.map((m,i)=>{
     const isMedia = m.type && m.type !== 'text';
-    return `<div class="msg-bubble ${m.from}${isMedia ? ' msg-bubble-media' : ''}">${bubbleContent(m)}</div>`;
+    const prev = c.messages[i-1];
+    const next = c.messages[i+1];
+    const groupedWithPrev = prev && prev.from === m.from;
+    const groupedWithNext = next && next.from === m.from;
+    const groupClass = (groupedWithPrev ? ' is-grouped-prev' : '') + (groupedWithNext ? ' is-grouped-next' : '');
+    return `<div class="msg-bubble ${m.from}${isMedia ? ' msg-bubble-media' : ''}${groupClass}">${bubbleContent(m)}</div>`;
   }).join('');
   bubbles.querySelectorAll('audio').forEach(audio=>{
     audio.addEventListener('ended', ()=>{
